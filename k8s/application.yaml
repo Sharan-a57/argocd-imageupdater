@@ -7,12 +7,14 @@ metadata:
     argocd-image-updater.argoproj.io/image-list: flask-app=aantonn/flask-app
     argocd-image-updater.argoproj.io/flask-app.update-strategy: latest
     argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
+    argocd-image-updater.argoproj.io/write-back-target: kustomization
 spec:
   project: default
   source:
     repoURL: https://github.com/Sharan-a57/argocd-imageupdater.git
     targetRevision: main
     path: k8s
+    kustomize: {}
   destination:
     server: https://kubernetes.default.svc
     namespace: default
