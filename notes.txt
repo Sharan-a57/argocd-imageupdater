@@ -10,3 +10,11 @@ kubectl port-forward svc/argocd-server -n argocd 8080:443
 
 (((Admin Password)))
 kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 --decode && echo
+
+(((Access the application)))
+minikube service flask-app-service -n dev
+(OR)
+kubectl port-forward svc/flask-app-service 5000:5000 -n dev
+Open application on Localhost:5000
+
+(((ImageUpdater installation)))
