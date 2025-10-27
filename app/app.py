@@ -11,7 +11,7 @@ def home():
         <title>Flask App</title>
         <style>
             body {
-                background-color: violet;
+                background-color: black;
                 display: flex;
                 justify-content: center;
                 align-items: center;
