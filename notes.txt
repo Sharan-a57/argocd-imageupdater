@@ -18,3 +18,28 @@ kubectl port-forward svc/flask-app-service 5000:5000 -n dev
 Open application on Localhost:5000
 
 (((ImageUpdater installation)))
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-image-updater/stable/manifests/install.yaml
+
+Create a k8s directory and add all of the deployment, svc and cm files with a kustomize file, why kustomize because argocd image updater only supports kustomize and only modifies the kustomize.yaml file with the new image version. 
+For the image version alone ArgoCD reffers to the kustomize.yaml file, as it overides the version in the deployment.yaml file.
+./k8s/
+├── application.yaml
+├── configmap.yaml
+├── deployment.yaml
+├── kustomization.yaml
+└── service.yaml
+
+The application file is the ArgoCD Application configs.
+Applying the file via kubectl will create an ArgoCD Application in the UI
+
+(((Add git creds for ImageUpdater to commit)))
+kubectl -n argocd-image-updater create secret generic git-creds \
+  --from-literal=username=someuser \
+  --from-literal=password=somepassword
+
+Reffer ├── application.yaml for annotations
+
+ImageUpdater pod logs should look like this
+time="2025-10-27T09:20:50Z" level=info msg="Processing results: applications=1 images_considered=1 images_skipped=0 images_updated=0 errors=0"
+time="2025-10-27T09:22:50Z" level=info msg="Starting image update cycle, considering 1 annotated application(s) for update"
+time="2025-10-27T09:22:52Z" level=info msg="Processing results: applications=1 images_considered=1 images_skipped=0 images_updated=0 errors=0"
