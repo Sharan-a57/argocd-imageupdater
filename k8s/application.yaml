@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: flask-app
+  namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: flask-app=aantonn/flask-app
+    argocd-image-updater.argoproj.io/flask-app.update-strategy: latest
+    argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Sharan-a57/argocd-imageupdater.git
+    targetRevision: main
+    path: k8s
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true

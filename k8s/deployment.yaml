@@ -4,10 +4,6 @@ metadata:
   name: flask-app
   labels:
     app: flask-app
-  annotations:
-    argocd-image-updater.argoproj.io/image-list: flask-app=aantonn/flask-app:v1.1
-    argocd-image-updater.argoproj.io/flask-app.update-strategy: latest
-    argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
 
 spec:
   replicas: 1
