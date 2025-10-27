@@ -4,3 +4,6 @@ resources:
   - deployment.yaml
   - service.yaml
   - configmap.yaml
+images:
+  - name: aantonn/flask-app
+    newTag: v1.2
